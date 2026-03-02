@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Scanner</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="url"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #00c6ff;
+            background: linear-gradient(to right, #0072ff, #00c6ff);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.4);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Vulnerability Scanner</h1>
+        <p class="subtitle">Scan websites for common security weaknesses</p>
+
+        <form action="/scan" method="post">
+            <label for="url">Target Website URL</label>
+            <input type="url" id="url" name="url" placeholder="https://example.com" required>
+            <button type="submit">Start Scan</button>
+        </form>
+
+        {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <footer>
+            Cyber Security Project • Flask
+        </footer>
+    </div>
+
+</body>
+</html>
