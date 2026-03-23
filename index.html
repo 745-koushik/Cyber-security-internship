@@ -1,119 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vulnerability Scanner</title>
+<meta charset="UTF-8">
+<title>SSL/TLS Security Scanner</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
 
-        .container {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+font-family:Roboto;
+color:white;
+text-align:center;
+padding:40px;
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 26px;
-        }
+.container{
+background:rgba(0,0,0,0.6);
+padding:40px;
+border-radius:15px;
+width:450px;
+margin:auto;
+box-shadow:0 0 20px rgba(0,255,255,0.4);
+}
 
-        p.subtitle {
-            text-align: center;
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 30px;
-        }
+h2{
+font-family:Orbitron;
+color:#00ffff;
+margin-bottom:25px;
+}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+input{
+width:80%;
+padding:12px;
+border:none;
+border-radius:8px;
+font-size:16px;
+margin-bottom:20px;
+outline:none;
+}
 
-        input[type="url"] {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            outline: none;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+button{
+background:#00ffff;
+border:none;
+padding:12px 25px;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #00c6ff;
-            background: linear-gradient(to right, #0072ff, #00c6ff);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+button:hover{
+background:#00bfbf;
+transform:scale(1.05);
+}
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.4);
-        }
+.result{
+margin-top:25px;
+background:#111;
+padding:20px;
+border-radius:10px;
+text-align:left;
+font-size:15px;
+box-shadow:0 0 10px rgba(0,255,255,0.3);
+}
 
-        .message {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.4);
-            text-align: center;
-            font-size: 14px;
-        }
+.label{
+color:#00ffff;
+font-weight:bold;
+}
 
-        footer {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 12px;
-            opacity: 0.6;
-        }
-    </style>
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>Vulnerability Scanner</h1>
-        <p class="subtitle">Scan websites for common security weaknesses</p>
+<div class="container">
 
-        <form action="/scan" method="post">
-            <label for="url">Target Website URL</label>
-            <input type="url" id="url" name="url" placeholder="https://example.com" required>
-            <button type="submit">Start Scan</button>
-        </form>
+<h2>SSL/TLS Security Scanner</h2>
 
-        {% if message %}
-        <div class="message">
-            {{ message }}
-        </div>
-        {% endif %}
+<input type="text" id="domain" placeholder="Enter domain (example.com)">
+<br>
+<button onclick="scan()">Scan Website</button>
 
-        <footer>
-            Cyber Security Project • Flask
-        </footer>
-    </div>
+<div class="result" id="result">
+Results will appear here...
+</div>
+
+</div>
+
+<script>
+
+function scan(){
+
+let domain=document.getElementById("domain").value;
+
+fetch("http://127.0.0.1:5000/scan",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({domain:domain})
+})
+
+.then(response=>response.json())
+.then(data=>{
+
+let output="";
+
+for(let key in data){
+output+=`<p><span class="label">${key}:</span> ${data[key]}</p>`;
+}
+
+document.getElementById("result").innerHTML=output;
+
+});
+
+}
+
+</script>
 
 </body>
 </html>
